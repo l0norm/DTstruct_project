@@ -2,69 +2,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 public class StoreWordsInBst<T> {
-	File stopWords = new File("/Users/salman/Downloads/stop.txt");
 	
-	public void StorMeaningfulWords(String docDatapath) { //docData from each linked list 
-//		File file = new File(docDatapath);
-//		boolean itisAstopWord = false ; 
-//        try (Scanner scanner = new Scanner(file)) {
-//        	Scanner stop = new Scanner(stopWords);
-//            while (scanner.hasNextLine()) {
-//            	String line = scanner.nextLine(); 
-//            	while(stop.hasNextLine()) {
-//            	    if( line == stop.nextLine()) {
-//            	    	itisAstopWord = true ;
-//            	    	
-//            	    }     	
-//            	}
-//            	if(!itisAstopWord) {
-//            		//ADD THE WORD TO THE BST SINCE ITS NOT IN THE STOP WORDS 
-//            	}
-//            }
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        }
-//        
-        
-    	File file = new File(docDatapath);
-    	String newstr = "";
-    	String stopwordstr="";
-    	String line = "";
-    	boolean itisAstopWord = false ; 
-        try (Scanner scanner = new Scanner(file)) {
-        	Scanner stop = new Scanner(stopWords);
-            while (scanner.hasNextLine()) {
-            	stop = new Scanner(stopWords);
-            	itisAstopWord = false ;
-            	 line = scanner.next(); 
-            	 System.out.println(line);
-            	while(stop.hasNextLine()) {
-            		stopwordstr = stop.nextLine();
-            	    if( line.equalsIgnoreCase(stopwordstr)) {
-            	    	
-            	    	itisAstopWord = true ;
-            	    	
-            	    }     	
-            	}
-            	if(!itisAstopWord) {
-            		newstr += line+" ";
-            		//ADD THE WORD TO THE BST SINCE ITS NOT IN THE STOP WORDS 
-            	}
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-		
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-
 	    BSTNode<T> root, current;
 		
 		/** Creates a new instance of BST */
