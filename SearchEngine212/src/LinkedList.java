@@ -1,10 +1,6 @@
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader; 
-import java.io.IOException;
-import java.util.Scanner;
-	
 public class LinkedList<T>{
+	private Node<T> head;
+	private Node<T> current;
 	
 	public LinkedList() {
 		head = current = null;
@@ -95,6 +91,16 @@ public class LinkedList<T>{
 
 
 	
+	}
+	public boolean contains(T element) {
+		Node<T> current = head;
+		while (current != null) {
+			if (current.data.equals(element)) {
+				return true;
+			}
+			current = current.next;
+		}
+		return false;
 	}
 }
 
