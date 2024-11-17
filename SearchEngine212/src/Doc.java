@@ -33,7 +33,7 @@ public class Doc{
                     if(!word.isEmpty() && !stopWords.contains(word)) {
                         docData.insert(word);
                     }
-                }
+                } 
             }
             
             scanner.close();

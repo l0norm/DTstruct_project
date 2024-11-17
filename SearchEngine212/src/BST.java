@@ -1,12 +1,10 @@
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Scanner;
-public class StoreWordsInBst<T> {
+
+public class BST<T> {
 	
 	    BSTNode<T> root, current;
 		
 		/** Creates a new instance of BST */
-		public StoreWordsInBst() {
+		public BST() {
 			root = current = null;
 		}
 		public boolean empty() {
@@ -156,3 +154,4 @@ public class StoreWordsInBst<T> {
 			return p;
 		}
 }
+
