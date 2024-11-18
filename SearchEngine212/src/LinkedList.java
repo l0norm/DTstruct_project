@@ -23,6 +23,10 @@ public class LinkedList<T>{
 	public T retrieve() {
 		return current.data;
 	}
+	// adding getter for head 
+	public Node<T> getHead() {
+		return head;
+	}
 	public void update(T e) {
 		current.data = e;
 	}
@@ -102,5 +106,15 @@ public class LinkedList<T>{
 		}
 		return false;
 	}
+	//method for printing the elements of the list ( for checking )
+	public void printList() {
+        current = head;
+        while (current != null) {
+            System.out.print(current.data + " ");
+            current = current.next;
+        }
+        System.out.println();
+    }
+	
 }
 
