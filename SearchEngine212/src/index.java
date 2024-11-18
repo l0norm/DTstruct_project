@@ -20,9 +20,8 @@ public class Index{
             File csvFile = new File(csvPath);
             Scanner scanner = new Scanner(csvFile);
             
-            docData = new LinkedList<String>();
-            
             while (scanner.hasNextLine()) {
+                docData = new LinkedList<String>();
                 String line = scanner.nextLine();
                 
                 String[] words = line.split("\\s+"); 
@@ -33,8 +32,8 @@ public class Index{
                     if(!word.isEmpty() && !stopWords.contains(word)) {
                         docData.insert(word);
                     }
-                    
                 } 
+                
                 docIDCounter++;
                 index[docIDCounter] = docData;
             }
