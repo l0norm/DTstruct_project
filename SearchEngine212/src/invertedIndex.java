@@ -9,7 +9,7 @@ class InvertedIndex {
 
     // Method to build the inverted index
     private void buildInvertedIndex(LinkedList<String>[] index, int docIDCounter) {
-        for (int docID = 1; docID <= docIDCounter; docID++) {
+        for (int docID = 0; docID <= docIDCounter; docID++) {//docID = 0 because the index starts from 0 and to not have future problems
             Node<String> currentWordNode = index[docID].getHead();
             while (currentWordNode != null) {
                 String word = currentWordNode.data;
