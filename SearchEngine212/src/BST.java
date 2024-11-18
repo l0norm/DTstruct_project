@@ -20,6 +20,10 @@ public class BST<T> {
 			remove_key(current.key);
 			return insert(key, data);
 		}
+		public BSTNode<T> getRoot(){
+			return root;
+		}
+		
 	    public void deleteSubtree(){
 			if(current == root){
 				current = root = null;

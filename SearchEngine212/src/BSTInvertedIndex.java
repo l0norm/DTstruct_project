@@ -3,7 +3,7 @@ public class BSTInvertedIndex{
     private static BST<WordDocumentMapping> BSTInvertedIndex;
 
     public BSTInvertedIndex(LinkedList<String>[] index, int docIDCounter){
-        BSTInvertedIndex = new BST();
+        BSTInvertedIndex = new BST<>();
         buildBSTInvertedIndex(index, docIDCounter);
     }
 
@@ -19,16 +19,39 @@ public class BSTInvertedIndex{
     }
 
     public void addWordToBSTInvertedIndex(String word, int docID){
-        BSTNode<WordDocumentMapping> current = BSTInvertedIndex.find(Relative.Root);
-        while(current != null){
-            if(current.data.word.equals(word)){
-                current.data.docIDs.insert(docID);
-                return;
-            }
-            current = current.next;
-        }
+        
+
+        if(BSTInvertedIndex.findkey(docID)){//if the key is found just add the docID to the BSTinvertedindex
+            BSTInvertedIndex.current.data.docIDs.insert(docID);
+            return;
+        }   
+        
+         // If the word is not in the inverted index, add it
+         WordDocumentMapping newMapping = new WordDocumentMapping(word);
+         newMapping.docIDs.insert(docID);
+         BSTInvertedIndex.insert(docID , newMapping);
+
+
+
+
     }
 
+    public static void printAllInvertedIndex(){
+        //method to print all nodes using 
+        printInvertedIndex(BSTInvertedIndex.getRoot());
+
+    }
+
+    public static void printInvertedIndex(BSTNode<WordDocumentMapping> current) {//method to print the BSTinvertedindex  
+       
+        printInvertedIndex(current.left);
+        System.out.println("Word: " + current.data.word + " -> Document IDs: ");
+
+        current.data.docIDs.printList();
+
+
+        printInvertedIndex(current.right);
+    }
 
 
 
