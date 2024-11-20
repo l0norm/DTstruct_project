@@ -3,13 +3,13 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 //this class is used to store the doc data and remove the stop words
-public class Index{
+public class index{
     public static int docIDCounter = 0; // made it static to track the number of doc
-    private LinkedList<String> docData;
-    private LinkedList<String> stopWords;
-    public static LinkedList<String> index[] = new LinkedList[10]; // array of linked list for indexing
     
-    public Index(String csvPath, String stopWordsPath){
+    private LinkedList<String> stopWords;
+    public static LinkedList<docs> index; // linked list of type docs to store a list inside every element in the list 
+    
+    public index(String csvPath, String stopWordsPath){
         
         loadStopWords(stopWordsPath);
         readDoc(csvPath);
@@ -21,7 +21,7 @@ public class Index{
             Scanner scanner = new Scanner(csvFile);
             
             while (scanner.hasNextLine()) {
-                docData = new LinkedList<String>();
+                docs data = new docs(docIDCounter);//adding the id of the doc ,,, and initializing the list that has the words
                 String line = scanner.nextLine();
                 
                 String[] words = line.split("\\s+"); 
@@ -30,12 +30,14 @@ public class Index{
                     word = word.replaceAll("[^a-zA-Z0-9]", "");
                     
                     if(!word.isEmpty() && !stopWords.contains(word)) {
-                        docData.insert(word);
+                        data.doc.insert(word);
                     }
                 } 
                 
+                
+                
+                index.insert(data);//inserting the list of words inside the index ,,,, so every index has a list called doc 
                 docIDCounter++;
-                index[docIDCounter] = docData;
             }
             
             scanner.close();

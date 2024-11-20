@@ -1,5 +1,5 @@
 class InvertedIndex {
-    private static  LinkedList<WordDocumentMapping> invertedIndex;
+    public static  LinkedList<WordDocumentMapping> invertedIndex;
 
     public InvertedIndex(LinkedList<String>[] index, int docIDCounter) {
         
