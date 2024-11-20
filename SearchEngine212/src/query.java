@@ -37,12 +37,12 @@ public class query {
                 String temp = operators.pop();
                 if(temp.equals("AND")){//if the operator is AND ad it to the postfix cause it has higher precedence
                     postfix.insert(temp);
-                }else{//if the operator is or push it back to the stack
+                }else{//if its other than and push it back to the stack
                     operators.push(temp);
                 }
             }
         }
-        while (!operators.empty()) {//push all the operators to the postfix
+        while (!operators.empty()) {//push all the remaining operators to the postfix
            postfix.insert(operators.pop());
         }
 
@@ -59,18 +59,22 @@ public class query {
             orProcess();
            }
            postfix.findNext();
+
+
+
+
         }else{//if its not an operator add it to the invertedindexforquery and its docIDs
             String word = postfix.retrieve();
             WordDocumentMapping newMapping = new WordDocumentMapping(word);
             Node<WordDocumentMapping> current = InvertedIndex.getHead();
-            while (current != null) {
+            while (current != null) {//adding the docIDs to the newMapping
                 if(current.data.word.equals(word)){
                     newMapping.docIDs = current.data.docIDs;
                     break;
                 }
                 current = current.next;
             }
-            invertedIndexForQuery.push(newMapping);
+            invertedIndexForQuery.push(newMapping);//insert the newMapping to the invertedindexforquery
             postfix.findNext();
         }
 
@@ -82,7 +86,7 @@ public class query {
 
 
 
-    public void andProcess(){        
+    public void andProcess(){//process the and operator a method in the linkedlist class
         WordDocumentMapping first = invertedIndexForQuery.pop();
         WordDocumentMapping second = invertedIndexForQuery.pop();
 
@@ -96,7 +100,7 @@ public class query {
 
     }
 
-    public void orProcess(){
+    public void orProcess(){//process the or operator a method in the linkedlist class
         WordDocumentMapping first = invertedIndexForQuery.pop();
         WordDocumentMapping second = invertedIndexForQuery.pop();
         first.docIDs.union(second.docIDs);
@@ -104,7 +108,7 @@ public class query {
 
     }
 
-    public void addToResult(LinkedStack<WordDocumentMapping> invertedIndexForQuery){//add the docIDs to the result
+    public void addToResult(LinkedStack<WordDocumentMapping> invertedIndexForQuery){//add the docIDs to the result ,,, to a linkedlist rather than a stack
         WordDocumentMapping current = invertedIndexForQuery.pop();
         while(!current.docIDs.empty()){
             result.insert(current.docIDs.retrieve());
