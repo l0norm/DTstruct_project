@@ -2,6 +2,7 @@ class InvertedIndex {
     private static  LinkedList<WordDocumentMapping> invertedIndex;
 
     public InvertedIndex(LinkedList<String>[] index, int docIDCounter) {
+        
         invertedIndex = new LinkedList<>();
         buildInvertedIndex(index, docIDCounter);
     }
@@ -47,5 +48,8 @@ class InvertedIndex {
             current.data.docIDs.printList();
             current = current.next;
         }
+    }
+    public static Node<WordDocumentMapping> getHead(){
+        return invertedIndex.getHead();
     }
 }

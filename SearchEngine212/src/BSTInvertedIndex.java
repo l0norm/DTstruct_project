@@ -35,6 +35,7 @@ public class BSTInvertedIndex{
 
 
     }
+    
 
     public static void printAllInvertedIndex(){
         //method to print all nodes using 
@@ -43,6 +44,7 @@ public class BSTInvertedIndex{
     }
 
     public static void printInvertedIndex(BSTNode<WordDocumentMapping> current) {//method to print the BSTinvertedindex  
+        //recursive method to print the BSTinvertedindex
        
         printInvertedIndex(current.left);
         System.out.println("Word: " + current.data.word + " -> Document IDs: ");

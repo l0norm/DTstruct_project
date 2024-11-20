@@ -96,6 +96,15 @@ public class LinkedList<T>{
 
 	
 	}
+	public int size(){
+		int count = 0;
+		Node<T> current = head;
+		while (current != null) {
+			count++;
+			current = current.next;
+		}
+		return count;
+	}
 	public boolean contains(T element) {
 		Node<T> current = head;
 		while (current != null) {
@@ -115,6 +124,26 @@ public class LinkedList<T>{
         }
         System.out.println();
     }
+	public void union(LinkedList<T> other){
+		Node<T> tmp = other.head;
+		while(tmp != null){
+			if(!this.contains(tmp.data)){
+				this.insert(tmp.data);
+			}
+			tmp = tmp.next;
+		}
+	}
+	public void intersection(LinkedList<T> other){
+		Node<T> tmp = other.head;
+		while(tmp != null){
+			if(this.contains(tmp.data)){
+				 
+			}else{
+				this.remove();
+			}
+			tmp = tmp.next;
+		}
+	}
 	
 }
 
