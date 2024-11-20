@@ -2,7 +2,7 @@
 public class query {
     
     LinkedList<Integer> result;
-    private String[] words;
+    private final String[] words;
 
     private LinkedStack<WordDocumentMapping> invertedIndexForQuery;
     
@@ -12,16 +12,14 @@ public class query {
 
 
     public query(String query){
-       
-
         words = query.split(" ");
+        initializeQuery();
+    }
+    private void initializeQuery(){
         convertingToPostfix(words);
-
         processQuery();
-       
-        
-
-
+        invertedIndexForQuery = new LinkedStack<>();
+        result = new LinkedList<>();
     }
 
     public void convertingToPostfix(String[] words){//convert the query to postfix
