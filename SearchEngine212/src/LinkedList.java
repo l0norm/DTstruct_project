@@ -139,32 +139,62 @@ public class LinkedList<T>{
         }
         System.out.println();
     }
-	public void union(LinkedList<T> other){
-		if(this.length() > other.length()){
-			Node<T> tmp = this.head;
-		while(tmp != null){
-			if(!other.contains(tmp.data)){
-				this.insert(tmp.data);
-			}
-			tmp = tmp.next;
-		}
-		}else{
-			Node<T> tmp2 = other.head;
-			while(tmp2 != null){
-				if(!this.contains(tmp2.data)){
-					other.insert(tmp2.data);
-				}
-				tmp2 = tmp2.next;
-			}
+	public LinkedList<T> union(LinkedList<T> other) {
+	    LinkedList<T> result = new LinkedList<>(); // implementing union using idea similar to merge sort
+	    Node<T> current1 = this.head; 
+	    Node<T> current2 = other.head; 
 
-		}	
+	    while (current1 != null && current2 != null) {
+	        int comparison = ((Comparable<T>) current1.data).compareTo(current2.data);
+
+	        if (comparison < 0) { 
+	            if (!result.contains(current1.data)) {
+	                result.insert(current1.data); 
+	            }
+	            current1 = current1.next;
+	        } else if (comparison > 0) {
+	            if (!result.contains(current2.data)) {
+	                result.insert(current2.data); 
+	            }
+	            current2 = current2.next;
+	        } else { 
+	            if (!result.contains(current1.data)) {
+	                result.insert(current1.data); 
+	            }
+	            current1 = current1.next;
+	            current2 = current2.next;
+	        }
+	    }
+
+	    // Add remaining elements from list1
+	    while (current1 != null) {
+	        if (!result.contains(current1.data)) {
+	            result.insert(current1.data); // Add unique element
+	        }
+	        current1 = current1.next;
+	    }
+
+	    // Add remaining elements from list2
+	    while (current2 != null) {
+	        if (!result.contains(current2.data)) {
+	            result.insert(current2.data); // Add unique element
+	        }
+	        current2 = current2.next;
+	    }
+
+	    return result;
 	}
+
+	
+
+	
 	public void intersection(LinkedList<T> other){
-		Node<T> tmp = this.head;
-		while(tmp != null){
-			if(other.contains(tmp.data)){
-				tmp = tmp.next;
-			}else if(!other.contains(tmp.data)){
+		// removing tmp and using current instead ( remove depends on current )
+		this.current = this.head;
+		while(current != null){
+			if(other.contains(current.data)){
+				current = current.next;
+			}else if(!other.contains(current.data)){
 				this.remove();
 			}
 			

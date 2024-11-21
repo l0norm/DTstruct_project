@@ -4,13 +4,13 @@ import java.util.Scanner;
 
 //this class is used to store the doc data and remove the stop words
 public class Index{
-    public static int docIDCounter = 0; // made it static to track the number of doc
+    public static int docIDCounter = 1; // made it static to track the number of doc , starts with 1
     
     private LinkedList<String> stopWords;
     public static LinkedList<docs> index; // linked list of type docs to store a list inside every element in the list 
     
     public Index(String csvPath, String stopWordsPath){
-        
+        index = new LinkedList<docs>(); 
         loadStopWords(stopWordsPath);
         readDoc(csvPath);
     }
@@ -35,8 +35,7 @@ public class Index{
                 } 
                 
                 
-                
-                index.insert(data);//inserting the list of words inside the index ,,,, so every index has a list called doc 
+                index.insert(data);//inserting the list of words inside the index ,,,, so every index has a list called doc
                 docIDCounter++;
             }
             
@@ -64,10 +63,12 @@ public class Index{
         }
     }
     public static  void printIndex() { // method for printing the docs 
+    	index.findFirst(); // here making the current points to the head
         while(!index.last()){
             index.retrieve().printDoc();
             index.findNext();
         }
+        index.retrieve().printDoc(); // here for printing last element
     }
    
 
