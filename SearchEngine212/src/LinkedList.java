@@ -27,6 +27,19 @@ public class LinkedList<T>{
 	public Node<T> getHead() {
 		return head;
 	}
+	public Node<T> getNode(){
+		return current;
+	}
+	public int length(){
+		int count = 0;
+		Node<T> current = head;
+		while (current != null) {
+			count++;
+			current = current.next;
+		}
+		return count;
+	}
+
 	public void update(T e) {
 		current.data = e;
 	}
@@ -115,6 +128,8 @@ public class LinkedList<T>{
 		}
 		return false;
 	}
+
+	
 	//method for printing the elements of the list ( for checking )
 	public void printList() {
         current = head;
@@ -125,23 +140,34 @@ public class LinkedList<T>{
         System.out.println();
     }
 	public void union(LinkedList<T> other){
-		Node<T> tmp = other.head;
+		if(this.length() > other.length()){
+			Node<T> tmp = this.head;
 		while(tmp != null){
-			if(!this.contains(tmp.data)){
+			if(!other.contains(tmp.data)){
 				this.insert(tmp.data);
 			}
 			tmp = tmp.next;
 		}
+		}else{
+			Node<T> tmp2 = other.head;
+			while(tmp2 != null){
+				if(!this.contains(tmp2.data)){
+					other.insert(tmp2.data);
+				}
+				tmp2 = tmp2.next;
+			}
+
+		}	
 	}
 	public void intersection(LinkedList<T> other){
-		Node<T> tmp = other.head;
+		Node<T> tmp = this.head;
 		while(tmp != null){
-			if(this.contains(tmp.data)){
-				 
-			}else{
+			if(other.contains(tmp.data)){
+				tmp = tmp.next;
+			}else if(!other.contains(tmp.data)){
 				this.remove();
 			}
-			tmp = tmp.next;
+			
 		}
 	}
 	

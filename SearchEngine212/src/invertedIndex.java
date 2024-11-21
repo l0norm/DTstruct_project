@@ -1,37 +1,43 @@
 class InvertedIndex {
     public static  LinkedList<WordDocumentMapping> invertedIndex;
 
-    public InvertedIndex(LinkedList<String>[] index, int docIDCounter) {
+    public InvertedIndex(LinkedList<docs> index) {
         
         invertedIndex = new LinkedList<>();
-        buildInvertedIndex(index, docIDCounter);
+        buildInvertedIndex(index);
     }
 
 
     // Method to build the inverted index
-    private void buildInvertedIndex(LinkedList<String>[] index, int docIDCounter) {
-        for (int docID = 0; docID <= docIDCounter; docID++) {//docID = 0 because the index starts from 0 and to not have future problems
-            Node<String> currentWordNode = index[docID].getHead();
+    private void buildInvertedIndex(LinkedList<docs> index) {
+        int docID = 0;
+        index.findFirst();
+        while(!index.last()) {
+            Node<docs> currentWordNode = index.getNode();
+
             while (currentWordNode != null) {
-                String word = currentWordNode.data;
+                String word = currentWordNode.data.doc.retrieve();
                 addWordToInvertedIndex(word, docID);
-                currentWordNode = currentWordNode.next;
+                currentWordNode.data.doc.findNext();
             }
+            docID++;
+            index.findNext();
         }
     }
 
     // Method to add a word and its document ID to the inverted index
     private void addWordToInvertedIndex(String word, int docID) {
-        Node<WordDocumentMapping> current = invertedIndex.getHead();
+        invertedIndex.findFirst();
         // word in the list ( repeated )
-        while (current != null) {
-            if (current.data.word.equals(word)) {
+        while (!invertedIndex.last()) { //looking for the word in the inverted index
+            if (invertedIndex.retrieve().word.equals(word)) {
+                Node<WordDocumentMapping> current = invertedIndex.getNode(); //if found get the node
                 if (!current.data.docIDs.contains(docID)) {
-                    current.data.docIDs.insert(docID);
+                    current.data.docIDs.insert(docID); //if the docID is not in the list insert it
                 }
                 return;
             }
-            current = current.next;
+            invertedIndex.findNext();
         }
 
         // If the word is not in the inverted index, add it
@@ -42,13 +48,14 @@ class InvertedIndex {
 
     // Method to print the inverted index
     public static void printInvertedIndex() {
-        Node<WordDocumentMapping> current = invertedIndex.getHead();
-        while (current != null) {
-            System.out.print("Word: " + current.data.word + " -> Document IDs: ");
-            current.data.docIDs.printList();
-            current = current.next;
+        invertedIndex.findFirst();
+        while (!invertedIndex.last()) {
+            System.out.print("Word: " + invertedIndex.retrieve().word + " -> Document IDs: ");
+           invertedIndex.retrieve().docIDs.printList();
+        invertedIndex.findNext();
         }
     }
+
     public static Node<WordDocumentMapping> getHead(){
         return invertedIndex.getHead();
     }

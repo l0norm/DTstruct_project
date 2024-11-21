@@ -3,13 +3,13 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 //this class is used to store the doc data and remove the stop words
-public class index{
+public class Index{
     public static int docIDCounter = 0; // made it static to track the number of doc
     
     private LinkedList<String> stopWords;
     public static LinkedList<docs> index; // linked list of type docs to store a list inside every element in the list 
     
-    public index(String csvPath, String stopWordsPath){
+    public Index(String csvPath, String stopWordsPath){
         
         loadStopWords(stopWordsPath);
         readDoc(csvPath);
@@ -64,14 +64,11 @@ public class index{
         }
     }
     public static  void printIndex() { // method for printing the docs 
-    	for(int i = 1 ; i <=docIDCounter ; i++) {
-    		System.out.print("Document "+i+": ");
-    		index[i].printList();
-    	}
+        while(!index.last()){
+            index.retrieve().printDoc();
+            index.findNext();
+        }
     }
-    public static void buildInvert() {
-    	InvertedIndex invert = new InvertedIndex(index , docIDCounter);
-    	InvertedIndex.printInvertedIndex();
-    }
+   
 
 }

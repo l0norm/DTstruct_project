@@ -5,21 +5,31 @@ public class query {
     private final String[] words;
 
     private LinkedStack<WordDocumentMapping> invertedIndexForQuery;
+
+    private LinkedStack<Boolean> indexForQuery;
+    
     
 
     private LinkedStack<String> operators;
     private LinkedList<String> postfix;
 
 
+
+
     public query(String query){
+        result = new LinkedList<>();
+
         words = query.split(" ");
-        initializeQuery();
+        initializeInvertedIndexQuery();
+        initializeIndexQuery();
+        
+
     }
-    private void initializeQuery(){
+    private void initializeInvertedIndexQuery(){
+        invertedIndexForQuery = new LinkedStack<>();
         convertingToPostfix(words);
         processQuery();
-        invertedIndexForQuery = new LinkedStack<>();
-        result = new LinkedList<>();
+        
     }
 
     public void convertingToPostfix(String[] words){//convert the query to postfix
@@ -114,6 +124,69 @@ public class query {
         }
 
     }
+    //=======================================================================
+    //boolean query using only index 
+    //=======================================================================
 
-    
+
+    public void initializeIndexQuery(){
+        indexForQuery = new LinkedStack<>();
+
+        convertingToPostfix(words); //convert the query to postfix
+        processIndexQuery(); 
+
+
+    }
+
+    public void processIndexQuery(){
+        int n = Index.index.length();
+        
+        for(int i =0; i<n; i++){//taking each index at a time
+           
+            
+            while (!postfix.last()) {//processing the whole postfix for each index,,,, first store the boolean to indexforquery then process it
+                if(postfix.retrieve().equals("AND") || postfix.retrieve().equals("OR")){
+                   if(postfix.retrieve().equals("AND")){
+                    andIndexProcess();
+                   }else{
+                    orIndexProcess();
+                   }
+                   
+                }else{
+                    String word = postfix.retrieve();
+                    indexForQuery.push(Index.index.retrieve().doc.contains(word)); //if the word is in the index then push true else false
+                    
+                }
+                postfix.findNext();
+        
+            }
+
+            if(indexForQuery.pop()){// at last we will have only one boolean in the stack ,,, if its true than the query is true for that index
+                result.insert(Index.index.retrieve().docId);//then store the docID in the result
+            }
+
+            
+
+            Index.index.findNext();
+            postfix.findFirst();
+        }
+        
+    }
+
+
+    public void andIndexProcess(){ //now we have 2 boolean to compare them 
+        boolean first = indexForQuery.pop();
+        boolean second = indexForQuery.pop();
+        indexForQuery.push(first && second);
+
+    }
+
+    public void orIndexProcess(){//we have 2 boolean to compare them 
+        boolean first = indexForQuery.pop();
+        boolean second = indexForQuery.pop();
+        indexForQuery.push(first || second);
+
+    }
+
+
 }

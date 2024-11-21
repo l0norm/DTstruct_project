@@ -7,4 +7,12 @@ public class docs {
         doc = new LinkedList<>();
 
     }
+   
+
+    public void printDoc(){
+        while(!doc.last()){
+            System.out.println(doc.retrieve());
+            doc.findNext();
+        }
+    }
 }
