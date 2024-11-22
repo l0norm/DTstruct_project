@@ -4,11 +4,13 @@ import java.util.Scanner;
 
 //this class is used to store the doc data and remove the stop words
 public class Index{
-    public static int docIDCounter = 1; // made it static to track the number of doc , starts with 1
+    public static int docIDCounter = 0; // made it static to track the number of doc , starts with 1
     
     private LinkedList<String> stopWords;
     public static LinkedList<docs> index; // linked list of type docs to store a list inside every element in the list 
-    
+
+
+
     public Index(String csvPath, String stopWordsPath){
         index = new LinkedList<docs>(); 
         loadStopWords(stopWordsPath);
@@ -19,10 +21,19 @@ public class Index{
         try {
             File csvFile = new File(csvPath);
             Scanner scanner = new Scanner(csvFile);
+
+            if (scanner.hasNextLine()) {//to skip the first line
+                scanner.nextLine();
+            }
+            boolean hasValidLine = false;
             
             while (scanner.hasNextLine()) {
                 docs data = new docs(docIDCounter);//adding the id of the doc ,,, and initializing the list that has the words
                 String line = scanner.nextLine();
+                
+                if (line.length() > 1) {
+                    line = line.substring(2);
+                }
                 
                 String[] words = line.split("\\s+"); 
                 for(String word : words) {
@@ -31,14 +42,16 @@ public class Index{
                     
                     if(!word.isEmpty() && !stopWords.contains(word)) {
                         data.doc.insert(word);
+                        hasValidLine = true;
                     }
                 } 
                 
-                
-                index.insert(data);//inserting the list of words inside the index ,,,, so every index has a list called doc
-                docIDCounter++;
+                if(hasValidLine){
+                    index.insert(data);//inserting the list of words inside the index ,,,, so every index has a list called doc
+                    docIDCounter++;
+                }
             }
-            
+
             scanner.close();
             
         } catch (FileNotFoundException e) {
@@ -68,7 +81,8 @@ public class Index{
             index.retrieve().printDoc();
             index.findNext();
         }
-        index.retrieve().printDoc(); // here for printing last element
+        
+        //no need to check the last element cause its empty 
     }
    
 

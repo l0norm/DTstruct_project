@@ -1,5 +1,6 @@
-class InvertedIndex {
+class InvertedIndex{//the inverted index extends index .. to get index info easily 
     public static  LinkedList<WordDocumentMapping> invertedIndex;
+    
 
     public InvertedIndex(LinkedList<docs> index) {
         invertedIndex = new LinkedList<>();
@@ -9,7 +10,7 @@ class InvertedIndex {
 
     // Method to build the inverted index
     private void buildInvertedIndex(LinkedList<docs> index) {
-        int docID = 1; // starts with 1
+        int docID = 0; // starts with 0
         Node<docs> currentDoc;
         String word;
         index.findFirst();
@@ -28,20 +29,9 @@ class InvertedIndex {
             docID++;
             index.findNext();
         }
-        // adding the last element of index to invertedIndex
-        currentDoc = index.getNode(); 
-        currentDoc.data.doc.findFirst(); //starting from the first element in the inner document
-        while (!currentDoc.data.doc.last()) {
-            word = currentDoc.data.doc.retrieve();
-            addWordToInvertedIndex(word, docID);
-            currentDoc.data.doc.findNext();
-        }
-        word = currentDoc.data.doc.retrieve();
-        addWordToInvertedIndex(word, docID);
-        currentDoc.data.doc.findNext();
+    
         
-        printInvertedIndex();
-    }
+     }// you dont need to check the last element cause its empty 
 
     // Method to add a word and its document ID to the inverted index
     private void addWordToInvertedIndex(String word, int docID) {
@@ -70,7 +60,7 @@ class InvertedIndex {
         while (!invertedIndex.last()) {
             System.out.print("Word: " + invertedIndex.retrieve().word + " -> Document IDs: ");
            invertedIndex.retrieve().docIDs.printList();
-        invertedIndex.findNext();
+            invertedIndex.findNext();
         }
         System.out.print("Word: " + invertedIndex.retrieve().word + " -> Document IDs: ");
         invertedIndex.retrieve().docIDs.printList(); // printing the last element

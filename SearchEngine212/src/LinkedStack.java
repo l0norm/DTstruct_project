@@ -21,6 +21,7 @@ public class LinkedStack<T> {
         top = top.next;
         return e;
     }
+    
 } 
     
 
