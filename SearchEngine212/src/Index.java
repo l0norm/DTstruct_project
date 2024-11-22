@@ -31,21 +31,24 @@ public class Index{
                 docs data = new docs(docIDCounter);//adding the id of the doc ,,, and initializing the list that has the words
                 String line = scanner.nextLine();
                 
+                
+
                 if (line.length() > 1) {
                     line = line.substring(2);
                 }
-                
                 String[] words = line.split("\\s+"); 
                 for(String word : words) {
                     word = word.toLowerCase().trim();
                     word = word.replaceAll("[^a-zA-Z0-9]", "");
-                    
+                
                     if(!word.isEmpty() && !stopWords.contains(word)) {
-                        data.doc.insert(word);
+                    data.doc.insert(word);
                         hasValidLine = true;
                     }
-                } 
-                
+            
+                }
+            
+
                 if(hasValidLine){
                     index.insert(data);//inserting the list of words inside the index ,,,, so every index has a list called doc
                     docIDCounter++;
@@ -82,7 +85,7 @@ public class Index{
             index.findNext();
         }
         
-        //no need to check the last element cause its empty 
+        index.retrieve().printDoc(); 
     }
    
 

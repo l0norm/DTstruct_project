@@ -29,6 +29,15 @@ class InvertedIndex{//the inverted index extends index .. to get index info easi
             docID++;
             index.findNext();
         }
+
+        
+        currentDoc = index.getNode();//for the last element
+        currentDoc.data.doc.findFirst();
+        while (!currentDoc.data.doc.last()) {
+            word = currentDoc.data.doc.retrieve();
+            addWordToInvertedIndex(word, docID);
+            currentDoc.data.doc.findNext();
+        }
     
         
      }// you dont need to check the last element cause its empty 
