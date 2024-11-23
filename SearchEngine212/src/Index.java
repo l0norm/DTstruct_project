@@ -8,7 +8,7 @@ public class Index{
     
     private LinkedList<String> stopWords;
     public static LinkedList<docs> index; // linked list of type docs to store a list inside every element in the list 
-
+    public static int tokens;
 
 
     public Index(String csvPath, String stopWordsPath){
@@ -29,20 +29,23 @@ public class Index{
                 String line = scanner.nextLine();
                 
                 
-
+                
+               
                 if (line.length() > 1 && Character.isDigit(line.charAt(0))) {
                     line = line.substring(2);
                     String[] words = line.split("\\s+"); 
-
+                    
                 for(String word : words) {
                     word = word.toLowerCase().trim();
-                    word = word.replaceAll("[^a-zA-Z0-9]", "");
-                
+                    word = word.replaceAll("[^a-zA-Z0-9']", "");
                     if(!word.isEmpty() && !stopWords.contains(word)) {
+                    	word = word.replaceAll("[^a-zA-Z0-9]", "");
                         data.doc.insert(word);
                         hasValidLine = true;
+                        tokens++;
                     }
-            
+                    
+                    
                 }
                 }
                 

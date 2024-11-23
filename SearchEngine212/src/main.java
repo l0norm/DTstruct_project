@@ -64,7 +64,7 @@ public static void main (String [] args ) {
 				Index.printIndex();
 				break;
 			case 4:
-				InvertedIndex.printInvertedIndex();
+				System.out.println("Tokens: "+search.tokens()+" Vocabulary: "+search.vocab());
 				break;
 			case 5:
 				input.close();

@@ -6,7 +6,7 @@ public class searchEngine{
     public BSTInvertedIndex bSTInvertedIndex;
 
     public searchEngine(){//initialize the index and the inverted index and the bst inverted index
-        index = new Index("C:\\Users\\Lenovo\\Desktop\\GIT\\DTstruct_project\\dataset.csv", "C:\\Users\\Lenovo\\Desktop\\GIT\\DTstruct_project\\stop.txt");
+        index = new Index("C:\\Users\\TheYo\\Downloads\\data\\data\\dataset.csv", "C:\\Users\\TheYo\\git\\DTstruct_project7\\DTstruct_project\\stop.txt");
         invertedIndex = new InvertedIndex(Index.index);//this is not an instance of index,,,, its a static list !!!!
         bSTInvertedIndex = new BSTInvertedIndex(Index.index);
         
@@ -41,7 +41,12 @@ public class searchEngine{
         process.invertedBST();
         process.getRankedResult();
     }
-
+    public int vocab() {
+    	return invertedIndex.invertedIndex.length();
+    }
+    public int tokens() {
+    	return Index.tokens;
+    }
 
 
 }

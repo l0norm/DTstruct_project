@@ -24,7 +24,6 @@ class InvertedIndex{//the inverted index extends index .. to get index info easi
             }
             word = currentDoc.data.doc.retrieve();
             addWordToInvertedIndex(word, docID);
-            currentDoc.data.doc.findNext();
             
             docID++;
             index.findNext();
@@ -39,8 +38,9 @@ class InvertedIndex{//the inverted index extends index .. to get index info easi
             currentDoc.data.doc.findNext();
         }
     
-        
-     }// you dont need to check the last element cause its empty 
+        word = currentDoc.data.doc.retrieve();
+        addWordToInvertedIndex(word, docID);
+     }
 
     // Method to add a word and its document ID to the inverted index
     private void addWordToInvertedIndex(String word, int docID) {

@@ -181,7 +181,6 @@ public class LinkedList<T>{
 	        }
 	        current2 = current2.next;
 	    }
-
 	    return result;
 	}
 
