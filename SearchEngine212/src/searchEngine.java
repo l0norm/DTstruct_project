@@ -9,12 +9,16 @@ public class searchEngine{
         index = new Index("C:\\Users\\Lenovo\\Desktop\\GIT\\DTstruct_project\\dataset.csv", "C:\\Users\\Lenovo\\Desktop\\GIT\\DTstruct_project\\stop.txt");
         invertedIndex = new InvertedIndex(Index.index);//this is not an instance of index,,,, its a static list !!!!
         bSTInvertedIndex = new BSTInvertedIndex(Index.index);
+        
     }
 
     public void processInverted(String query){
         process = new query(query);
         process.inverted();
+        process.printResults();
     }
+
+
 
     public void processIndex(String query){
         process = new query(query);
@@ -27,5 +31,15 @@ public class searchEngine{
         process.invertedBST();
 
     }
+
+    public void processRanked(String query){
+        query = query.replace(" ", " OR ");
+        
+        process = new query(query);
+        process.invertedBST();
+        process.getRankedResult();
+    }
+
+
 
 }

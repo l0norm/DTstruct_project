@@ -29,6 +29,16 @@ public class BSTInvertedIndex{
             docID++;
             index.findNext();
         }
+        currentDocNode = index.getNode();
+        currentDocNode.data.doc.findFirst();
+        while(!currentDocNode.data.doc.last()){
+            word = currentDocNode.data.doc.retrieve();
+            addWordToBSTInvertedIndex(word, docID);
+            currentDocNode.data.doc.findNext();
+        }
+        word = currentDocNode.data.doc.retrieve();
+        addWordToBSTInvertedIndex(word, docID);
+
     }
 
     public void addWordToBSTInvertedIndex(String word, int docID){

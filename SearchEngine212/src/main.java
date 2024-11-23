@@ -6,14 +6,9 @@ public static void main (String [] args ) {
 
 
 	
-	//Index.printIndex();
-	//InvertedIndex.printInvertedIndex();
-    //BSTInvertedIndex.printAllInvertedBstIndex(); for testing 
-
+	
 	searchEngine search = new searchEngine();
 	
-
-
 	 int choice;
 	 Scanner input = new Scanner(System.in);
 	
@@ -61,6 +56,9 @@ public static void main (String [] args ) {
 				}
 				break;
 			case 2:
+				System.out.println("enter the words you want to rank");
+				String query = input.nextLine();
+				search.processRanked(query);
 				break;
 			case 3:
 				Index.printIndex();

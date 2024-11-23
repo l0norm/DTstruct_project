@@ -10,7 +10,7 @@ public class query {
 
     private LinkedStack<Boolean> indexForQuery;
     
-    
+    private LinkedList<String> wordsForRank;
 
     private LinkedStack<String> operators;//these 2 are tmps to converte the querie to postfix
     private LinkedList<String> postfix;
@@ -23,7 +23,7 @@ public class query {
 
     public query(String query){
         words = query.split(" ");
-        
+        wordsForRank = new LinkedList<>();
 
     }
 
@@ -47,18 +47,19 @@ public class query {
         invertedIndexForQuery = new LinkedStack<>();
         convertingToPostfix(words);
         processQuery();
-        printResults();
+        
         
     }
 
     public void convertingToPostfix(String[] words){//convert the query to postfix
+
         for(int i = 0; i < words.length; i++){//inserting the words to the postfix
             String word = words[i];
             if(word.equals("AND") || word.equals("OR")){//if the word is an operator
                 operators.push(word);
             }else{
                 postfix.insert(word);//inserting the word to the postfix
-               
+                wordsForRank.insert(word);
             }
             if (i%2==0 && i > 0 /*no operator in the index 0*/ ) {//if the index is even
                 String temp = operators.pop();
@@ -192,6 +193,17 @@ public class query {
             result.findNext();
         } while (true);
     }
+    
+
+    public void getRankedResult(){
+
+        ranking ranked = new ranking(result,wordsForRank);
+        ranked.convertingToIndex();
+        ranked.calculateRank();
+        ranked.sort();
+        ranked.printRankedResult();
+    }
+
     //=======================================================================
     //boolean query using only index 
     //=======================================================================
@@ -204,7 +216,7 @@ public class query {
         indexForQuery = new LinkedStack<>();
         convertingToPostfix(words); //convert the query to postfix
         processIndexQuery(); 
-        printResults();
+        
 
 
     }
@@ -279,7 +291,7 @@ public class query {
 
     processQueryBST();
     
-    printResults();
+   
     
     
 
@@ -374,8 +386,11 @@ public void addToResultBST(LinkedStack<WordDocumentMapping> invertedBSTForQuery)
         result.insert(current.docIDs.retrieve());
         current.docIDs.findNext();
     }
+    
     result.insert(current.docIDs.retrieve());
 
 }
+
+
 
 }

@@ -30,7 +30,7 @@ class InvertedIndex{//the inverted index extends index .. to get index info easi
             index.findNext();
         }
 
-        
+         
         currentDoc = index.getNode();//for the last element
         currentDoc.data.doc.findFirst();
         while (!currentDoc.data.doc.last()) {
