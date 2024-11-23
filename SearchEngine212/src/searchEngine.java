@@ -23,12 +23,14 @@ public class searchEngine{
     public void processIndex(String query){
         process = new query(query);
         process.index();
+        process.printResults();
 
     }
 
     public void processInvertedBST(String query){
         process = new query(query);
         process.invertedBST();
+        process.printResults();
 
     }
 

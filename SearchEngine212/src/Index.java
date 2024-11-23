@@ -21,32 +21,31 @@ public class Index{
         try {
             File csvFile = new File(csvPath);
             Scanner scanner = new Scanner(csvFile);
-
-            if (scanner.hasNextLine()) {//to skip the first line
-                scanner.nextLine();
-            }
-            boolean hasValidLine = false;
+            
             
             while (scanner.hasNextLine()) {
+                boolean hasValidLine = false;
                 docs data = new docs(docIDCounter);//adding the id of the doc ,,, and initializing the list that has the words
                 String line = scanner.nextLine();
                 
                 
 
-                if (line.length() > 1) {
+                if (line.length() > 1 && Character.isDigit(line.charAt(0))) {
                     line = line.substring(2);
-                }
-                String[] words = line.split("\\s+"); 
+                    String[] words = line.split("\\s+"); 
+
                 for(String word : words) {
                     word = word.toLowerCase().trim();
                     word = word.replaceAll("[^a-zA-Z0-9]", "");
                 
                     if(!word.isEmpty() && !stopWords.contains(word)) {
-                    data.doc.insert(word);
+                        data.doc.insert(word);
                         hasValidLine = true;
                     }
             
                 }
+                }
+                
             
 
                 if(hasValidLine){
