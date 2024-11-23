@@ -77,6 +77,25 @@ public class query {
 
 
     public void processQuery(){
+        if(postfix.length() == 1){
+            String word = postfix.retrieve();
+            WordDocumentMapping newMapping = new WordDocumentMapping(word);
+            Node<WordDocumentMapping> current = InvertedIndex.getHead();
+
+            
+
+            while (current != null) {//adding the docIDs to the newMapping
+                if(current.data.word.equals(word)){
+                    newMapping.docIDs = current.data.docIDs;
+                    break;//break cause we found the word
+                }
+                current = current.next;
+            }
+                 
+                invertedIndexForQuery.push(newMapping);//insert the newMapping to the invertedindexforquery
+        }
+
+
     	postfix.findFirst(); // here
       
       while (!postfix.last()) {
@@ -116,7 +135,7 @@ public class query {
       // last element always will always be an operator
       if(postfix.retrieve().equals("AND")){
           andProcess();
-         }else{
+         }else if(postfix.retrieve().equals("OR")){
           orProcess();
          }
 
@@ -222,6 +241,7 @@ public class query {
     }
 
     public void processIndexQuery(){
+        
         int n = Index.index.length();
         Index.index.findFirst();
         
@@ -247,7 +267,7 @@ public class query {
             // last element will always be a operator
                 if(postfix.retrieve().equals("AND")){
                  andIndexProcess();
-                }else{
+                }else if(postfix.retrieve().equals("OR")){
                  orIndexProcess();
                 }
 
@@ -297,6 +317,21 @@ public class query {
 
  }
  public void processQueryBST(){
+    if(postfix.length() == 1){
+        int key = wordToKey(postfix.retrieve()); //get the key of the word
+        String word = postfix.retrieve(); 
+        WordDocumentMapping newMapping = new WordDocumentMapping(word);
+        
+
+        if(BSTInvertedIndex.bSTInvertedIndex.findkey(key)){
+            newMapping.docIDs = BSTInvertedIndex.bSTInvertedIndex.retrieve().docIDs;
+            //here we dont need a break 
+        }
+
+        invertedBSTForQuery.push(newMapping);
+
+
+    }
     postfix.findFirst(); // here
   
   while (!postfix.last()) {
@@ -344,7 +379,7 @@ public class query {
   // last element always will always be an operator
   if(postfix.retrieve().equals("AND")){
       andProcessBST();
-     }else{
+     }else if (postfix.retrieve().equals("OR")){
       orProcessBST();
      }
 
