@@ -1,3 +1,4 @@
-UML, analysist , documenting 
+SearchEngine...
 
-if theres extra time we can make the AVL 
+searching csv file 
+with boolean queries /AND-OR
